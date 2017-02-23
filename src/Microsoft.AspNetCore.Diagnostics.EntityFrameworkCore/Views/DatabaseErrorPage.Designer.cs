@@ -1,56 +1,27 @@
 namespace Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.RazorViews
 {
-#line 1 "DatabaseErrorPage.cshtml"
-using System
-
-#line default
-#line hidden
-    ;
-#line 2 "DatabaseErrorPage.cshtml"
-using System.Linq
-
-#line default
-#line hidden
-    ;
-#line 3 "DatabaseErrorPage.cshtml"
-using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
-
-#line default
-#line hidden
-    ;
-#line 4 "DatabaseErrorPage.cshtml"
-using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.RazorViews
-
-#line default
-#line hidden
-    ;
+    #line hidden
+    using System;
     using System.Threading.Tasks;
+#line 2 "DatabaseErrorPage.cshtml"
+using System.Linq;
 
+#line default
+#line hidden
+#line 3 "DatabaseErrorPage.cshtml"
+using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
+
+#line default
+#line hidden
+#line 4 "DatabaseErrorPage.cshtml"
+using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.RazorViews;
+
+#line default
+#line hidden
     internal class DatabaseErrorPage : Microsoft.Extensions.RazorViews.BaseView
     {
-#line 11 "DatabaseErrorPage.cshtml"
-
-    public DatabaseErrorPageModel Model { get; set; }
-
-    public string UrlEncode(string content)
-    {
-        return UrlEncoder.Encode(content);
-    }
-
-    public string JavaScriptEncode(string content)
-    {
-        return JavaScriptEncoder.Encode(content);
-    }
-
-#line default
-#line hidden
-        #line hidden
-        public DatabaseErrorPage()
-        {
-        }
-
         #pragma warning disable 1998
-        public override async Task ExecuteAsync()
+        public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
 #line 5 "DatabaseErrorPage.cshtml"
   
@@ -58,9 +29,9 @@ using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.RazorViews
     Response.ContentType = "text/html; charset=utf-8";
     Response.ContentLength = null; // Clear any prior Content-Length
 
+
 #line default
 #line hidden
-
             WriteLiteral(@"<!DOCTYPE html>
 
 <html lang=""en"" xmlns=""http://www.w3.org/1999/xhtml"">
@@ -159,18 +130,12 @@ body .titleerror {
 #line hidden
             WriteLiteral("</h1>\r\n    <p>\r\n");
 #line 115 "DatabaseErrorPage.cshtml"
-        
-
-#line default
-#line hidden
-
-#line 115 "DatabaseErrorPage.cshtml"
          for (Exception ex = Model.Exception; ex != null; ex = ex.InnerException)
             {
 
+
 #line default
 #line hidden
-
             WriteLiteral("            <span>");
 #line 117 "DatabaseErrorPage.cshtml"
              Write(ex.GetType().Name);
@@ -187,23 +152,17 @@ body .titleerror {
 #line 119 "DatabaseErrorPage.cshtml"
         }
 
+
 #line default
 #line hidden
-
             WriteLiteral("    </p>\r\n    <hr />\r\n\r\n");
-#line 123 "DatabaseErrorPage.cshtml"
-    
-
-#line default
-#line hidden
-
 #line 123 "DatabaseErrorPage.cshtml"
      if (!Model.DatabaseExists && !Model.PendingMigrations.Any())
     {
 
+
 #line default
 #line hidden
-
             WriteLiteral("        <h2>");
 #line 125 "DatabaseErrorPage.cshtml"
        Write(Strings.FormatDatabaseErrorPage_NoDbOrMigrationsTitle(Model.ContextType.Name));
@@ -252,9 +211,9 @@ body .titleerror {
     else if (Model.PendingMigrations.Any())
     {
 
+
 #line default
 #line hidden
-
             WriteLiteral("        <div>\r\n            <h2>");
 #line 139 "DatabaseErrorPage.cshtml"
            Write(Strings.FormatDatabaseErrorPage_PendingMigrationsTitle(Model.ContextType.Name));
@@ -269,18 +228,12 @@ body .titleerror {
 #line hidden
             WriteLiteral("</p>\r\n\r\n            <ul>\r\n");
 #line 143 "DatabaseErrorPage.cshtml"
-                
-
-#line default
-#line hidden
-
-#line 143 "DatabaseErrorPage.cshtml"
                  foreach (var migration in Model.PendingMigrations)
                 {
 
+
 #line default
 #line hidden
-
             WriteLiteral("                    <li>");
 #line 145 "DatabaseErrorPage.cshtml"
                    Write(migration);
@@ -291,9 +244,9 @@ body .titleerror {
 #line 146 "DatabaseErrorPage.cshtml"
                 }
 
+
 #line default
 #line hidden
-
             WriteLiteral("            </ul>\r\n\r\n            <p>\r\n                <button id=\"applyMigrations\" onclick=\"ApplyMigrations()\">");
 #line 150 "DatabaseErrorPage.cshtml"
                                                                     Write(Strings.DatabaseErrorPage_ApplyMigrationsButton);
@@ -398,9 +351,9 @@ body .titleerror {
     else if (Model.PendingModelChanges)
     {
 
+
 #line default
 #line hidden
-
             WriteLiteral("        <div>\r\n            <h2>");
 #line 200 "DatabaseErrorPage.cshtml"
            Write(Strings.FormatDatabaseErrorPage_PendingChangesTitle(Model.ContextType.Name));
@@ -447,11 +400,28 @@ body .titleerror {
 #line 211 "DatabaseErrorPage.cshtml"
     }
 
+
 #line default
 #line hidden
-
             WriteLiteral("</body>\r\n</html>");
         }
         #pragma warning restore 1998
+#line 11 "DatabaseErrorPage.cshtml"
+ 
+    public DatabaseErrorPageModel Model { get; set; }
+
+    public string UrlEncode(string content)
+    {
+        return UrlEncoder.Encode(content);
+    }
+
+    public string JavaScriptEncode(string content)
+    {
+        return JavaScriptEncoder.Encode(content);
+    }
+
+
+#line default
+#line hidden
     }
 }
