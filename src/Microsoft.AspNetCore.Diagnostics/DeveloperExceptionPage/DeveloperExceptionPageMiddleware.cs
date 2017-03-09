@@ -126,35 +126,55 @@ namespace Microsoft.AspNetCore.Diagnostics
                 Options = _options,
             };
 
-            foreach (var compilationFailure in compilationException.CompilationFailures)
+            if (compilationException.CompilationFailures != null)
             {
-                var stackFrames = new List<StackFrameSourceCodeInfo>();
-                var exceptionDetails = new ExceptionDetails
+                foreach (var compilationFailure in compilationException.CompilationFailures)
                 {
-                    StackFrames = stackFrames,
-                    ErrorMessage = compilationFailure.FailureSummary,
-                };
-                var fileContent = compilationFailure
-                    .SourceFileContent
-                    .Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-
-                foreach (var item in compilationFailure.Messages)
-                {
-                    var frame = new StackFrameSourceCodeInfo
+                    if (compilationFailure == null)
                     {
-                        File = compilationFailure.SourceFilePath,
-                        Line = item.StartLine,
-                        Function = string.Empty
+                        continue;
+                    }
+
+                    var stackFrames = new List<StackFrameSourceCodeInfo>();
+                    var exceptionDetails = new ExceptionDetails
+                    {
+                        StackFrames = stackFrames,
+                        ErrorMessage = compilationFailure.FailureSummary,
                     };
+                    var fileContent = compilationFailure
+                        .SourceFileContent?
+                        .Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
-                    _exceptionDetailsProvider.ReadFrameContent(frame, fileContent, item.StartLine, item.EndLine);
-                    frame.ErrorDetails = item.Message;
+                    if (compilationFailure.Messages != null)
+                    {
+                        foreach (var item in compilationFailure.Messages)
+                        {
+                            if (item == null)
+                            {
+                                continue;
+                            }
 
-                    stackFrames.Add(frame);
+                            var frame = new StackFrameSourceCodeInfo
+                            {
+                                File = compilationFailure.SourceFilePath,
+                                Line = item.StartLine,
+                                Function = string.Empty
+                            };
+
+                            if (fileContent != null)
+                            {
+                                _exceptionDetailsProvider.ReadFrameContent(frame, fileContent, item.StartLine, item.EndLine);
+                            }
+
+                            frame.ErrorDetails = item.Message;
+
+                            stackFrames.Add(frame);
+                        }
+                    }
+
+                    model.ErrorDetails.Add(exceptionDetails);
+                    model.CompiledContent.Add(compilationFailure.CompiledContent);
                 }
-
-                model.ErrorDetails.Add(exceptionDetails);
-                model.CompiledContent.Add(compilationFailure.CompiledContent);
             }
 
             var errorPage = new CompilationErrorPage
